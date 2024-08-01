@@ -9,33 +9,37 @@ namespace TasksManager.Controllers
     public class GoalController(GoalServices goalServices) : ControllerBase
     {
         [HttpGet]
-        public List<Goal> GetAll()
+        public IActionResult GetAll()
         {
-            return goalServices.GetAll();
+            return Ok(goalServices.GetAll());
         }
 
         [HttpGet("{id}")]
-        public Goal Get(int id)
+        public IActionResult Get(int id)
         {
-            return goalServices.Get(id);
+            var goal = goalServices.Get(id);
+            return goal != null ? Ok(goal) : BadRequest("Ошибка id");
         }
 
         [HttpPost]
-        public void Add(Goal goal)
+        public IActionResult Add(Goal goal)
         {
-            goalServices.Add(goal);
+            bool goalAdd = goalServices.Add(goal);
+            return goalAdd ? Ok(goal) : Conflict("Задача с таким id уже существует");
         }
 
         [HttpDelete]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            goalServices.Delete(id);
+            var goalDel = goalServices.Delete(id);
+            return goalDel ? Ok(goalDel) : BadRequest("Ошибка id");
         }
 
         [HttpPut]
-        public void Update(int id, Goal newGoal)
+        public IActionResult Update(int id, Goal newGoal)
         {
-            goalServices.Update(id, newGoal);
+            var goalUpdate = goalServices.Update(id, newGoal);
+            return goalUpdate ? Ok(goalUpdate) : BadRequest("Ошибка id");
         }
     }
 }
