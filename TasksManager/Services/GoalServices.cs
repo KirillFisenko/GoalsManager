@@ -11,7 +11,7 @@ namespace TasksManager.Services
             return goals;
         }
 
-        public Goal Get(int id)
+        public Goal? Get(int id)
         {
             return goals.FirstOrDefault(goal => goal.Id == id);
         }
