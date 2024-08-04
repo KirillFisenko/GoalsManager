@@ -1,6 +1,6 @@
 ﻿namespace TasksManager.Model
 {
-    public enum Statuses
+    public enum Status
     {
         New = 0,
         InProgress = 1,

@@ -45,7 +45,7 @@ namespace TasksManager.Services
             {
                 goal.Name = newGoal.Name;
                 goal.Description = newGoal.Description;
-                goal.Statuses = newGoal.Statuses;
+                goal.Status = newGoal.Status;
                 return true;
             }
             return false;
