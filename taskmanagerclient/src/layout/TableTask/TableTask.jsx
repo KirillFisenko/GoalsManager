@@ -5,6 +5,7 @@ const TableTask = (props) => {
         <table className="table table-hover">
             <thead>
                 <tr>
+                <th>Номер</th>
                     <th>Наименование</th>
                     <th>Описание</th>
                     <th>Статус</th>
