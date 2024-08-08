@@ -1,5 +1,6 @@
 import { useState } from "react";
 import TableTask from "./layout/TableTask/TableTask"
+import FormTask from "./layout/FormTask/FormTask";
 
 const App = () => {
 
@@ -24,13 +25,8 @@ const App = () => {
         </div>
         <div className="card-body">
           <TableTask tasks={tasks} />
-        </div>
-        <div>
-          <button className="btn btn-primary"
-            onClick={() => { addTask() }}>
-            Добавить задачу
-          </button>
-        </div>
+          <FormTask addTask={addTask}/>
+        </div>        
       </div>
     </div>
   )
