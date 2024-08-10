@@ -5,6 +5,12 @@ const RowTableTask = (props) => {
             <th>{props.name}</th>
             <th>{props.description}</th>
             <th>{props.status}</th>
+            <th>
+                <button className="btn btn-danger btn-sm"
+                    onClick={() => props.deleteTask(props.id)}>
+                    Удалить
+                </button>
+            </th>
         </tr>
     )
 }

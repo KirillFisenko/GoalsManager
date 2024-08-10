@@ -11,10 +11,18 @@ const App = () => {
     { id: 3, name: 'Задача 4', description: 'Описание задачи 4', status: 'Новая' }
   ]);
 
-  const addTask = () => {
-    const newId = tasks.sort((x, y) => x.id - y.id)[tasks.length - 1].id + 1;
-    const item = { id: newId, name: 'Задача new', description: 'Описание задачи new', status: 'Новая' };
+  const addTask = (taskName, taskDescription, taskStatus) => {
+    const newId = tasks.length === 0 ?
+      1
+      :
+      Math.max(...tasks.map(e => e.id)) + 1;
+
+    const item = { id: newId, name: taskName, description: taskDescription, status: taskStatus };
     setTasks([...tasks, item]);
+  }
+
+  const deleteTask = (id) => {
+    setTasks(tasks.filter(item => item.id != id));
   }
 
   return (
@@ -24,9 +32,14 @@ const App = () => {
           <h1>Список задач</h1>
         </div>
         <div className="card-body">
-          <TableTask tasks={tasks} />
-          <FormTask addTask={addTask}/>
-        </div>        
+          <TableTask
+            tasks={tasks}
+            deleteTask={deleteTask}
+          />
+          <FormTask
+            addTask={addTask}
+          />
+        </div>
       </div>
     </div>
   )

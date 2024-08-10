@@ -1,14 +1,15 @@
 import RowTableTask from "./components/RowTableTask";
 
-const TableTask = (props) => {    
+const TableTask = (props) => {
     return (
         <table className="table table-hover">
             <thead>
                 <tr>
-                <th>Номер</th>
-                    <th>Наименование</th>
+                    <th>#</th>
+                    <th>Тема</th>
                     <th>Описание</th>
                     <th>Статус</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -16,10 +17,12 @@ const TableTask = (props) => {
                     props.tasks.map(
                         task =>
                             <RowTableTask
+                                key={task.id}
                                 id={task.id}
                                 name={task.name}
                                 description={task.description}
                                 status={task.status}
+                                deleteTask={props.deleteTask}
                             />
                     )
                 }
