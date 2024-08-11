@@ -4,7 +4,13 @@ namespace TasksManager.Services
 {
     public class GoalServices
     {
-        private static readonly List<Goal> goals = [];
+        private static readonly List<Goal> goals = [
+            new Goal() { Id = 1, Name = "Задача 1", Description = "Описание 1", Status = Status.New },
+            new Goal() { Id = 2, Name = "Задача 2", Description = "Описание 2", Status = Status.New },
+            new Goal() { Id = 3, Name = "Задача 3", Description = "Описание 3", Status = Status.New },
+            new Goal() { Id = 4, Name = "Задача 4", Description = "Описание 4", Status = Status.New },
+            new Goal() { Id = 5, Name = "Задача 5", Description = "Описание 5", Status = Status.New }
+            ];
 
         public List<Goal> GetAll()
         {

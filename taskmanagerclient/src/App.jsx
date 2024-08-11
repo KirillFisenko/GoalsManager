@@ -1,15 +1,26 @@
-import { useState } from "react";
-import TableTask from "./layout/TableTask/TableTask"
+import axios from 'axios';
+import { useState, useEffect } from "react";
+import TableTask from "./layout/TableTask/TableTask";
 import FormTask from "./layout/FormTask/FormTask";
 
-const App = () => {
+const baseApiUrl = "https://localhost:7267";
 
+const App = () => {
   const [tasks, setTasks] = useState([
     { id: 5, name: 'Задача 1', description: 'Описание задачи 1', status: 'Новая' },
     { id: 2, name: 'Задача 2', description: 'Описание задачи 2', status: 'Новая' },
     { id: 6, name: 'Задача 3', description: 'Описание задачи 3', status: 'Новая' },
     { id: 3, name: 'Задача 4', description: 'Описание задачи 4', status: 'Новая' }
   ]);
+
+  useEffect(() => {
+    const url = `${baseApiUrl}/Goal`;    
+    axios.get(url).then(
+      res => console.log(res.data)
+    ).catch(error => {
+      console.error('Ошибка при получении данных:', error);
+    });
+  }, []);
 
   const addTask = (taskName, taskDescription, taskStatus) => {
     const newId = tasks.length === 0 ?
@@ -22,7 +33,7 @@ const App = () => {
   }
 
   const deleteTask = (id) => {
-    setTasks(tasks.filter(item => item.id != id));
+    setTasks(tasks.filter(item => item.id !== id));
   }
 
   return (
@@ -45,4 +56,4 @@ const App = () => {
   )
 }
 
-export default App
+export default App;
