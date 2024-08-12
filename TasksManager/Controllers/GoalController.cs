@@ -25,7 +25,7 @@ namespace TasksManager.Controllers
         public IActionResult Add(Goal goal)
         {
             bool goalAdd = goalServices.Add(goal);
-            return goalAdd ? Created("Задача добавлена", goal) : Conflict("Задача с таким id уже существует");
+            return goalAdd ? Ok(goal) : Conflict("Задача с таким id уже существует");
         }
 
         [HttpDelete]

@@ -6,21 +6,14 @@ import FormTask from "./layout/FormTask/FormTask";
 const baseApiUrl = "https://localhost:7267";
 
 const App = () => {
-  const [tasks, setTasks] = useState([
-    { id: 5, name: 'Задача 1', description: 'Описание задачи 1', status: 'Новая' },
-    { id: 2, name: 'Задача 2', description: 'Описание задачи 2', status: 'Новая' },
-    { id: 6, name: 'Задача 3', description: 'Описание задачи 3', status: 'Новая' },
-    { id: 3, name: 'Задача 4', description: 'Описание задачи 4', status: 'Новая' }
-  ]);
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     const url = `${baseApiUrl}/Goal`;    
     axios.get(url).then(
-      res => console.log(res.data)
-    ).catch(error => {
-      console.error('Ошибка при получении данных:', error);
-    });
-  }, []);
+      res => setTasks(res.data)
+    );
+    }, []);  
 
   const addTask = (taskName, taskDescription, taskStatus) => {
     const newId = tasks.length === 0 ?
@@ -28,7 +21,9 @@ const App = () => {
       :
       Math.max(...tasks.map(e => e.id)) + 1;
 
-    const item = { id: newId, name: taskName, description: taskDescription, status: taskStatus };
+    const item = { id: newId, name: taskName, description: taskDescription, status: Number(taskStatus) };
+    const url = `${baseApiUrl}/Goal`;
+    axios.post(url, item);
     setTasks([...tasks, item]);
   }
 
