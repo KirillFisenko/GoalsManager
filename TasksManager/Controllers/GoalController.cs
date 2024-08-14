@@ -28,7 +28,7 @@ namespace TasksManager.Controllers
             return goalAdd ? Ok(goal) : Conflict("Задача с таким id уже существует");
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             var goalDel = goalServices.Delete(id);
