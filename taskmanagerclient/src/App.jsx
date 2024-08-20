@@ -28,6 +28,8 @@ const App = () => {
   }
 
   const deleteTask = (id) => {
+    const url = `${baseApiUrl}/Goal/${id}`;
+    axios.delete(url);
     setTasks(tasks.filter(item => item.id !== id));
   }
 

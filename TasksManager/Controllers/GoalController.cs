@@ -6,7 +6,7 @@ namespace TasksManager.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class GoalController(GoalServices goalServices) : ControllerBase
+    public class GoalController(IGoalServices goalServices) : ControllerBase
     {
         [HttpGet]
         public IActionResult GetAll()
@@ -28,7 +28,7 @@ namespace TasksManager.Controllers
             return goalAdd ? Ok(goal) : Conflict("Задача с таким id уже существует");
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             var goalDel = goalServices.Delete(id);

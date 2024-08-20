@@ -2,7 +2,7 @@ using TasksManager.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<GoalServices>();
+builder.Services.AddScoped<IGoalServices, GoalAdoNetServices>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

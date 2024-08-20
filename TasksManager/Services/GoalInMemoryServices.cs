@@ -2,7 +2,7 @@
 
 namespace TasksManager.Services
 {
-    public class GoalServices
+    public class GoalInMemoryServices : IGoalServices
     {
         private static readonly List<Goal> goals = [
             new Goal() { Id = 1, Name = "Задача 1", Description = "Описание 1", Status = Status.New },

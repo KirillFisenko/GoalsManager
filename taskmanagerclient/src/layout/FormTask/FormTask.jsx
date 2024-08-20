@@ -38,6 +38,7 @@ const FormTask = (props) => {
                             <option value="0">Новая</option>
                             <option value="1">В работе</option>
                             <option value="2">Завершена</option>
+                            <option value="3">Отменена</option>
                         </select>
                     </div>
                 </form>
