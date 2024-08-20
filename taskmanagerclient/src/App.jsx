@@ -4,12 +4,12 @@ import TableTask from "./layout/TableTask/TableTask";
 import FormTask from "./layout/FormTask/FormTask";
 
 const baseApiUrl = "https://localhost:7267";
+const url = `${baseApiUrl}/Goal`;
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
 
-  useEffect(() => {
-    const url = `${baseApiUrl}/Goal`;    
+  useEffect(() => {        
     axios.get(url).then(
       res => setTasks(res.data)
     );
@@ -21,15 +21,13 @@ const App = () => {
       :
       Math.max(...tasks.map(e => e.id)) + 1;
 
-    const item = { id: newId, name: taskName, description: taskDescription, status: Number(taskStatus) };
-    const url = `${baseApiUrl}/Goal`;
+    const item = { id: newId, name: taskName, description: taskDescription, status: Number(taskStatus) };    
     axios.post(url, item);
     setTasks([...tasks, item]);
   }
 
   const deleteTask = (id) => {
-    const url = `${baseApiUrl}/Goal/${id}`;
-    axios.delete(url);
+    axios.delete(`${url}/${id}`)
     setTasks(tasks.filter(item => item.id !== id));
   }
 
