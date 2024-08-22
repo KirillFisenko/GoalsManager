@@ -3,10 +3,8 @@ using TasksManager.Model;
 
 namespace TasksManager.Services
 {
-    public class GoalAdoNetServices : IGoalServices
+    public class GoalAdoNetServices(string connectionString) : IGoalServices
     {
-        private string connectionString = "Server=localhost;Database=tasks;Uid=root;Pwd=m48kHz16bit%;";
-
         public List<Goal> GetAll()
         {
             var goals = new List<Goal>();
