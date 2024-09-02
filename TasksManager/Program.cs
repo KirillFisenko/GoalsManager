@@ -1,10 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using TasksManager.DataContext;
 using TasksManager.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("MySQLConnectionStrings");
-
-builder.Services.AddSingleton<IGoalServices>(new GoalAdoNetServices(connectionString));
+builder.Services.AddDbContext<MySqlDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+builder.Services.AddScoped<IGoalServices, GoalEFService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
