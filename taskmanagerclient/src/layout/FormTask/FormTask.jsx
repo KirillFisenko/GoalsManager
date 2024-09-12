@@ -18,7 +18,7 @@ const FormTask = (props) => {
             <div className="mb-3">
                 <form>
                     <div className="mb-3">
-                        <label className="form-label">Имя задачи:</label>
+                        <label className="form-label">Имя задачи</label>
                         <input className="form-control" type="text"
                             value={taskName}
                             onChange={(e) => { setTaskName(e.target.value) }}></input>

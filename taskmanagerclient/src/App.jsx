@@ -2,6 +2,8 @@ import axios from 'axios';
 import { useState, useEffect } from "react";
 import TableTask from "./layout/TableTask/TableTask";
 import FormTask from "./layout/FormTask/FormTask";
+import { Route, Routes } from 'react-router-dom';
+import GoalDetails from './layout/GoalDetails/GoalDetails';
 
 const baseApiUrl = "https://localhost:7267";
 const url = `${baseApiUrl}/Goal`;
@@ -9,11 +11,11 @@ const url = `${baseApiUrl}/Goal`;
 const App = () => {
   const [tasks, setTasks] = useState([]);
 
-  useEffect(() => {        
+  useEffect(() => {
     axios.get(url).then(
       res => setTasks(res.data)
     );
-    }, []);  
+  }, []);
 
   const addTask = (taskName, taskDescription, taskStatus) => {
     const newId = tasks.length === 0 ?
@@ -21,7 +23,7 @@ const App = () => {
       :
       Math.max(...tasks.map(e => e.id)) + 1;
 
-    const item = { id: newId, name: taskName, description: taskDescription, status: Number(taskStatus) };    
+    const item = { id: newId, name: taskName, description: taskDescription, status: Number(taskStatus) };
     axios.post(url, item);
     setTasks([...tasks, item]);
   }
@@ -33,20 +35,25 @@ const App = () => {
 
   return (
     <div className="container mt-5">
-      <div className="card">
-        <div className="card-header">
-          <h1>Список задач</h1>
-        </div>
-        <div className="card-body">
-          <TableTask
-            tasks={tasks}
-            deleteTask={deleteTask}
-          />
-          <FormTask
-            addTask={addTask}
-          />
-        </div>
-      </div>
+      <Routes>
+        <Route path='/' element={
+          <div className="card">
+            <div className="card-header">
+              <h1>Список задач</h1>
+            </div>
+            <div className="card-body">
+              <TableTask
+                tasks={tasks}
+                deleteTask={deleteTask}
+              />
+              <FormTask
+                addTask={addTask}
+              />
+            </div>
+          </div>
+        } />
+        <Route path='goal/:id' element={< GoalDetails />} />
+      </Routes>
     </div>
   )
 }
