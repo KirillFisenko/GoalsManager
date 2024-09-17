@@ -29,8 +29,10 @@ const App = () => {
   }
 
   const deleteTask = (id) => {
-    axios.delete(`${url}/${id}`)
-    setTasks(tasks.filter(item => item.id !== id));
+    if (window.confirm("Вы уверены?")) {
+      axios.delete(`${url}/${id}`)
+      setTasks(tasks.filter(item => item.id !== id));
+    }
   }
 
   return (

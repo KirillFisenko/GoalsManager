@@ -33,8 +33,7 @@ const FormTask = (props) => {
                         <label className="form-label">Статус задачи</label>
                         <select className="form-select"
                             value={taskStatus}
-                            onChange={(e) => { setTaskStatus(e.target.value) }}>
-                                
+                            onChange={(e) => { setTaskStatus(e.target.value) }}>                                
                             <option value="0">Новая</option>
                             <option value="1">В работе</option>
                             <option value="2">Завершена</option>

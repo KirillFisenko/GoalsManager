@@ -35,7 +35,7 @@ namespace TasksManager.Controllers
             return goalDel ? Ok(goalDel) : NotFound("id не найден");
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public IActionResult Update(int id, Goal newGoal)
         {
             var goalUpdate = goalServices.Update(id, newGoal);
