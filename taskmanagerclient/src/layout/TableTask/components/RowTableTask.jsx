@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const getStatusLabel = (status) => {
     switch (status) {
         case 0:
@@ -25,6 +27,13 @@ const RowTableTask = (props) => {
                     onClick={() => props.deleteTask(props.id)}>
                     Удалить
                 </button>
+            </th>
+            <th>
+                <Link
+                    to={`/goal/${props.id}`}
+                    className="btn btn-primary btn-sm">
+                    Подробнее
+                </Link>
             </th>
         </tr>
     )
