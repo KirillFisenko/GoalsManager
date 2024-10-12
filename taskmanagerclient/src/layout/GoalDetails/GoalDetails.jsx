@@ -1,53 +1,37 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { baseApiUrl } from "../../config";
+import { reverseStatusMap, statusMap } from "../../Helpers";
 
-const baseApiUrl = "https://localhost:7267";
-
-const statusMap = {
-    "Новая": 0,
-    "В работе": 1,
-    "Завершена": 2,
-    "Отменена": 3
-};
-
-const GoalDetails = () => {
+const GoalDetails = () => {    
     const [goal, setGoal] = useState({ name: "", description: "", status: "" });
     const { id } = useParams();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const url = `${baseApiUrl}/goal/${id}`;
+    useEffect(() => {    
+        const url = `${baseApiUrl}/goal/${id}`;    
         axios.get(url).then(
             response => {
                 setGoal(response.data);
             }
-        ).catch(
-            err => {
-                console.log(err);
-                navigate("/");
-            }
         );
     }, [id, navigate]);
 
-    const handleRemove = () => {
-        const url = `${baseApiUrl}/goal/${id}`;
+    const handleRemove = () => {     
+        const url = `${baseApiUrl}/goal/${id}`;   
         if (window.confirm("Вы уверены?")) {
             axios.delete(url).then(
                 () => navigate("/")
-            ).catch(
-                err => console.log("Ошибка удаления", err)
             );
         }
     }
 
-    const handleUpdate = () => {
-        const url = `${baseApiUrl}/goal/${id}`;
+    const handleUpdate = () => { 
+        const url = `${baseApiUrl}/goal/${id}`;       
         const goalToSend = { ...goal, status: statusMap[goal.status] };
         axios.put(url, goalToSend).then(
             () => navigate("/")
-        ).catch(
-            err => console.log("Ошибка обновления", err)
         );
     }
 
@@ -75,7 +59,7 @@ const GoalDetails = () => {
             <div className="mb-3">
                 <label className="form-label">Статус задачи:</label>
                 <select className="form-select"
-                    value={goal.status}
+                    value={reverseStatusMap[goal.status]}
                     onChange={(e) => { setGoal({ ...goal, status: e.target.value }) }}>
                     <option value="Новая">Новая</option>
                     <option value="В работе">В работе</option>

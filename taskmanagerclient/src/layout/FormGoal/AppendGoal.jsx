@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import FormTask from "./FormTask";
+import FormGoal from "./FormGoal";
 import axios from 'axios';
+import { baseApiUrl } from "../../config";
 
-const baseApiUrl = "https://localhost:7267";
 const url = `${baseApiUrl}/Goal`;
 
-const AppendTask = () => {
+const AppendGoal = () => {
     const navigate = useNavigate();
-    const addTask = (taskName, taskDescription, taskStatus) => {
+    const addGoal = (goalName, goalDescription, goalStatus) => {
         const item = {
-            name: taskName,
-            description: taskDescription,
-            status: Number(taskStatus)
+            name: goalName,
+            description: goalDescription,
+            status: Number(goalStatus)
         };
         axios.post(url, item).then(
             () => navigate("/"));
@@ -23,12 +23,12 @@ const AppendTask = () => {
                 <h1>Добавить задачу</h1>
             </div>
             <div className="card-body">
-                <FormTask
-                    addTask={addTask}
+                <FormGoal
+                    addGoal={addGoal}
                 />
             </div>
         </div>
     )
 }
 
-export default AppendTask;
+export default AppendGoal;

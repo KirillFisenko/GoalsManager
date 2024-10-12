@@ -1,26 +1,26 @@
 import axios from 'axios';
 import { useState, useEffect } from "react";
-import TableTask from "./layout/TableTask/TableTask";
+import TableGoal from "./layout/TableGoal/TableGoal";
 import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import GoalDetails from './layout/GoalDetails/GoalDetails';
-import AppendTask from './layout/FormTask/AppendTask';
+import AppendGoal from './layout/FormGoal/AppendGoal';
+import { baseApiUrl } from './config';
 
-const baseApiUrl = "https://localhost:7267";
 const url = `${baseApiUrl}/Goal`;
 
 const App = () => {
-  const [tasks, setTasks] = useState([]);
+  const [goal, setGoals] = useState([]);
   const location = useLocation();
   useEffect(() => {
     axios.get(url).then(
-      res => setTasks(res.data)
+      res => setGoals(res.data)
     );
   }, [location.pathname]);
 
-  const deleteTask = (id) => {
+  const deleteGoal = (id) => {
     if (window.confirm("Вы уверены?")) {
       axios.delete(`${url}/${id}`)
-      setTasks(tasks.filter(item => item.id !== id));
+      setGoals(goal.filter(item => item.id !== id));
     }
   }
 
@@ -33,9 +33,9 @@ const App = () => {
               <h1>Список задач</h1>
             </div>
             <div className="card-body">
-              <TableTask
-                tasks={tasks}
-                deleteTask={deleteTask}
+              <TableGoal
+                goals={goal}
+                deleteGoal={deleteGoal}
               />
               <Link
                 to="/append"
@@ -46,7 +46,7 @@ const App = () => {
           </div>
         } />
         <Route path='goal/:id' element={< GoalDetails />} />
-        <Route path='append' element={< AppendTask />} />
+        <Route path='append' element={< AppendGoal />} />
       </Routes>
     </div>
   )

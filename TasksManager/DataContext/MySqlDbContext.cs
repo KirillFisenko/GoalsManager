@@ -6,9 +6,6 @@ namespace TasksManager.DataContext
     public class MySqlDbContext : DbContext
     {
         public DbSet<Goal> Goals { get; set; }
-        public MySqlDbContext(DbContextOptions<MySqlDbContext> options) : base(options)
-        {
-
-        }
+        public MySqlDbContext(DbContextOptions<MySqlDbContext> options) : base(options) { }
     }
 }

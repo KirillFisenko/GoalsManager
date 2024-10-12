@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const FormTask = (props) => {
-    const [taskName, setTaskName] = useState("");
-    const [taskDescription, setTaskDescription] = useState("");
-    const [taskStatus, setTaskStatus] = useState("0");
-    
+const FormGoal = (props) => {
+    const [goalName, setGoalName] = useState("");
+    const [goalDescription, setGoalDescription] = useState("");
+    const [goalStatus, setGoalStatus] = useState("0");
+
     const navigate = useNavigate();
 
     const submit = () => {
-        if (taskName === "" || taskDescription === "" || taskStatus === "") return;
-        props.addTask(taskName, taskDescription, taskStatus);
-        setTaskName("");
-        setTaskDescription("");
-        setTaskStatus("0");
+        if (goalName === "" || goalDescription === "" || goalStatus === "") return;
+        props.addGoal(goalName, goalDescription, goalStatus);
+        setGoalName("");
+        setGoalDescription("");
+        setGoalStatus("0");
     }
 
     return (
@@ -23,20 +23,20 @@ const FormTask = (props) => {
                     <div className="mb-3">
                         <label className="form-label">Имя задачи</label>
                         <input className="form-control" type="text"
-                            value={taskName}
-                            onChange={(e) => { setTaskName(e.target.value) }}></input>
+                            value={goalName}
+                            onChange={(e) => { setGoalName(e.target.value) }}></input>
                     </div>
                     <div className="mb-3">
                         <label className="form-label">Описание задачи</label>
                         <textarea className="form-control" type="text"
-                            value={taskDescription}
-                            onChange={(e) => { setTaskDescription(e.target.value) }}></textarea>
+                            value={goalDescription}
+                            onChange={(e) => { setGoalDescription(e.target.value) }}></textarea>
                     </div>
                     <div className="mb-3">
                         <label className="form-label">Статус задачи</label>
                         <select className="form-select"
-                            value={taskStatus}
-                            onChange={(e) => { setTaskStatus(e.target.value) }}>
+                            value={goalStatus}
+                            onChange={(e) => { setGoalStatus(e.target.value) }}>
                             <option value="0">Новая</option>
                             <option value="1">В работе</option>
                             <option value="2">Завершена</option>
@@ -59,4 +59,4 @@ const FormTask = (props) => {
     )
 };
 
-export default FormTask;
+export default FormGoal;
