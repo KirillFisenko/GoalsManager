@@ -1,32 +1,21 @@
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import TableTask from "./layout/TableTask/TableTask";
-import FormTask from "./layout/FormTask/FormTask";
-import { Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import GoalDetails from './layout/GoalDetails/GoalDetails';
+import AppendTask from './layout/FormTask/AppendTask';
 
 const baseApiUrl = "https://localhost:7267";
 const url = `${baseApiUrl}/Goal`;
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
-
+  const location = useLocation();
   useEffect(() => {
     axios.get(url).then(
       res => setTasks(res.data)
     );
-  }, []);
-
-  const addTask = (taskName, taskDescription, taskStatus) => {
-    const newId = tasks.length === 0 ?
-      1
-      :
-      Math.max(...tasks.map(e => e.id)) + 1;
-
-    const item = { id: newId, name: taskName, description: taskDescription, status: Number(taskStatus) };
-    axios.post(url, item);
-    setTasks([...tasks, item]);
-  }
+  }, [location.pathname]);
 
   const deleteTask = (id) => {
     if (window.confirm("Вы уверены?")) {
@@ -48,13 +37,16 @@ const App = () => {
                 tasks={tasks}
                 deleteTask={deleteTask}
               />
-              <FormTask
-                addTask={addTask}
-              />
+              <Link
+                to="/append"
+                className="btn btn-success btn-sm">
+                Создать задачу
+              </Link>
             </div>
           </div>
         } />
         <Route path='goal/:id' element={< GoalDetails />} />
+        <Route path='append' element={< AppendTask />} />
       </Routes>
     </div>
   )

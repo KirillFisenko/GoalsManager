@@ -84,11 +84,11 @@ const GoalDetails = () => {
                 </select>
             </div>
             <button
-                className="btn btn-primary me-2" onClick={handleUpdate}>
+                className="btn btn-success me-2" onClick={handleUpdate}>
                 Обновить
             </button>
             <button
-                className="btn btn-primary me-2" onClick={handleRemove}>
+                className="btn btn-danger me-2" onClick={handleRemove}>
                 Удалить
             </button>
             <button

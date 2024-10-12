@@ -10,6 +10,7 @@ const TableTask = (props) => {
                     <th>Описание</th>
                     <th>Статус</th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>

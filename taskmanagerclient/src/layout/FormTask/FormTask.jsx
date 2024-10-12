@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const FormTask = (props) => {
     const [taskName, setTaskName] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
     const [taskStatus, setTaskStatus] = useState("0");
+    
+    const navigate = useNavigate();
 
     const submit = () => {
         if (taskName === "" || taskDescription === "" || taskStatus === "") return;
@@ -33,7 +36,7 @@ const FormTask = (props) => {
                         <label className="form-label">Статус задачи</label>
                         <select className="form-select"
                             value={taskStatus}
-                            onChange={(e) => { setTaskStatus(e.target.value) }}>                                
+                            onChange={(e) => { setTaskStatus(e.target.value) }}>
                             <option value="0">Новая</option>
                             <option value="1">В работе</option>
                             <option value="2">Завершена</option>
@@ -43,9 +46,13 @@ const FormTask = (props) => {
                 </form>
             </div>
             <div>
-                <button className="btn btn-success"
+                <button className="btn btn-success btn-sm me-2"
                     onClick={() => { submit() }}>
                     Добавить задачу
+                </button>
+                <button
+                    className="btn btn-primary btn-sm me-2" onClick={() => { navigate("/") }}>
+                    Назад
                 </button>
             </div>
         </div>
