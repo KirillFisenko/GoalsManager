@@ -1,17 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using TasksManager.Model;
+using TasksManager.Redis;
 using TasksManager.Services;
 
 namespace TasksManager.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class GoalController(IGoalServices goalServices) : ControllerBase
+    public class GoalController(IGoalServices goalServices, RedisCacheService redisCacheService, GoalsCache goalsCache) : ControllerBase
     {
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(goalServices.GetAll());
+            var cachedData = redisCacheService.Get(RedisCacheService.RedisCacheKey);
+            var goals = new List<Goal>();
+            if (!string.IsNullOrEmpty(cachedData))
+            {
+                goals = JsonSerializer.Deserialize<List<Goal>>(cachedData);
+            }
+            else
+            {
+                goals = goalServices.GetAll();
+                var goalsJson = JsonSerializer.Serialize(goals);
+                redisCacheService.Set(RedisCacheService.RedisCacheKey, goalsJson);
+            }
+            return Ok(goals);
         }
 
         [HttpGet("{id}")]
@@ -25,6 +39,8 @@ namespace TasksManager.Controllers
         public IActionResult Add(Goal goal)
         {
             bool goalAdd = goalServices.Add(goal);
+            goalsCache.RemoveCache();
+            goalsCache.UpdateCache();
             return goalAdd ? Ok(goal) : Conflict("Задача с таким id уже существует");
         }
 
@@ -32,6 +48,8 @@ namespace TasksManager.Controllers
         public IActionResult Delete(int id)
         {
             var goalDel = goalServices.Delete(id);
+            goalsCache.RemoveCache();
+            goalsCache.UpdateCache();
             return goalDel ? Ok(goalDel) : NotFound("id не найден");
         }
 
@@ -39,6 +57,8 @@ namespace TasksManager.Controllers
         public IActionResult Update(int id, Goal newGoal)
         {
             var goalUpdate = goalServices.Update(id, newGoal);
+            goalsCache.RemoveCache();
+            goalsCache.UpdateCache();
             return goalUpdate ? Ok(goalUpdate) : NotFound("id не найден");
         }
     }

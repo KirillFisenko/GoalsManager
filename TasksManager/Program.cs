@@ -1,11 +1,24 @@
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 using TasksManager.DataContext;
+using TasksManager.Redis;
 using TasksManager.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("MySQLConnectionStrings");
 builder.Services.AddDbContext<MySqlDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+var redisConfiguration = ConfigurationOptions.Parse(builder.Configuration.GetSection("Redis:ConnectionStrings").Value!);
+redisConfiguration.AbortOnConnectFail = false;
+redisConfiguration.ConnectTimeout = 50;
+
+builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+{
+    return ConnectionMultiplexer.Connect(redisConfiguration);
+});
+builder.Services.AddSingleton<RedisCacheService>();
+builder.Services.AddScoped<GoalsCache>();
 
 builder.Services.AddScoped<IGoalServices, GoalEFService>();
 
